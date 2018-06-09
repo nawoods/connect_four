@@ -6,6 +6,28 @@ describe Game do
       expect(Game.new.game_state).to eq([[nil] * 7] * 6)
     end
   end
+
+  describe "#board_slot" do
+    context "when slot is empty" do
+      subject { Game.new.board_slot(6,3) }
+
+      it "returns nil" do
+        expect(subject).to eq(nil)
+      end
+    end
+
+    context "when slot is nonempty" do
+      subject do
+        game = Game.new
+        game.play(1, 4)
+        game.board_slot(6, 4)
+      end
+
+      it "returns player number" do
+        expect(subject).to eq(1)
+      end
+    end
+  end
   
   describe "#play" do
     context "when given column is empty" do
@@ -65,6 +87,47 @@ describe Game do
       
       it "does not change game_state" do
         expect(subject.first).to eq(subject.last)
+      end
+    end
+  end
+
+  describe "#check_game_end" do
+    context "when no winner yet" do
+      subject { Game.new.check_game_end }
+
+      it "returns nil" do
+        expect(subject).to eq(nil)
+      end
+    end
+
+    context "when game has been won horizontally" do
+      subject do
+        game = Game.new
+        4.times do |i|
+          game.play(1, i+1)
+          game.play(2, 5) unless i == 3
+        end
+        game.check_game_end
+      end
+
+      it "returns number of winning player" do
+        expect(subject).to eq(1)
+      end
+    end
+
+    context "when game has been won vertically" do
+      subject do
+        game = Game.new
+        game.play(1, 1)
+        4.times do |i|
+          game.play(2, 3)
+          game.play(1, 5) unless i == 3
+        end
+        game.check_game_end
+      end
+
+      it "returns number of winning player" do
+        expect(subject).to eq(2)
       end
     end
   end
