@@ -20,7 +20,7 @@ describe Game do
       subject do
         game = Game.new
         game.play(1, 4)
-        game.board_slot(6, 4)
+        game.board_slot(1, 4)
       end
 
       it "returns player number" do
@@ -34,11 +34,11 @@ describe Game do
       subject do
         game = Game.new
         game.play(1, 4)
-        game.game_state
+        game.board_slot(1, 4)
       end
       
       it "adds a piece to the bottom row" do
-        expect(subject[5][3]).to eq(1)
+        expect(subject).to eq(1)
       end
     end
   
@@ -56,12 +56,12 @@ describe Game do
         game.play(2, 3)
         game.play(1, 3)
         
-        game.game_state
+        game
       end
       
       it "adds a piece to the correct row" do
-        expect(subject[4][5]).to eq(2)
-        expect(subject[1][2]).to eq(1)
+        expect(subject.board_slot(2, 6)).to eq(2)
+        expect(subject.board_slot(5, 3)).to eq(1)
       end
     end
     

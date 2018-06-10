@@ -1,5 +1,5 @@
 class Game
-  attr_accessor :game_state
+  attr_reader :game_state
   
   def initialize
     @game_state = Array.new(6) { Array.new(7) }
@@ -10,10 +10,10 @@ class Game
   end
   
   def play(player, col)
-    row = 6
+    row = 1
     while !board_slot(row, col).nil?
-      row -= 1
-      return false if row < 1
+      row += 1
+      return false if row > 6
     end
     insert_chip(player, row, col)
   end
