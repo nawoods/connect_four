@@ -130,5 +130,59 @@ describe Game do
         expect(subject).to eq(2)
       end
     end
+
+    context "when game has been won diagonally (/)" do
+      subject do
+        game = Game.new
+
+        game.play(1, 1)
+
+        game.play(2, 2)
+        game.play(1, 2)
+        
+        game.play(2, 1)
+        game.play(1, 3)
+        game.play(2, 3)
+        game.play(1, 3)
+
+        game.play(2, 4)
+        game.play(1, 4)
+        game.play(2, 4)
+        game.play(1, 4)
+
+        game.check_game_end
+      end
+
+      it "returns number of winning player" do
+        expect(subject).to eq(1)
+      end
+    end
+
+    context "when game has been won diagonally (\)" do
+      subject do
+        game = Game.new
+
+        game.play(1, 7)
+
+        game.play(2, 6)
+        game.play(1, 6)
+        
+        game.play(2, 1)
+        game.play(1, 5)
+        game.play(2, 5)
+        game.play(1, 5)
+
+        game.play(2, 4)
+        game.play(1, 4)
+        game.play(2, 4)
+        game.play(1, 4)
+
+        game.check_game_end
+      end
+
+      it "returns number of winning player" do
+        expect(subject).to eq(1)
+      end
+    end
   end
 end
