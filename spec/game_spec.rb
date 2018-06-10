@@ -184,5 +184,30 @@ describe Game do
         expect(subject).to eq(1)
       end
     end
+
+    context "when game board is full" do
+      subject do
+        game = Game.new
+
+        7.times do |i|
+          next if i == 3
+          3.times do |j|
+            game.play(1, i+1)
+            game.play(2, i+1)
+          end
+        end
+
+        3.times do |j|
+          game.play(2, 4)
+          game.play(1, 4)
+        end
+
+        game.check_game_end
+      end
+
+      it "returns :draw" do
+        expect(subject).to eq(:draw)
+      end
+    end
   end
 end

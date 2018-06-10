@@ -20,7 +20,7 @@ class Game
 
   def check_game_end
     check_horizontal_win || check_vertical_win || 
-        check_diagonal_win(-1) || check_diagonal_win(1)
+        check_diagonal_win(-1) || check_diagonal_win(1) || check_draw
   end
 
   private
@@ -64,11 +64,21 @@ class Game
   end
 
   def check_array_win(array)
-    array.slice(0, array.length - 3).each_with_index do |chip1, i|
-      if array.slice(i+1, 3).reduce(true) { |p, chip2| p && chip1  == chip2 }
-        return chip1
+    (array.length - 3).times do |i|
+      if !array[i].nil? && four_in_a_row_result(array.slice(i, 4))
+        return array[i]
       end
     end
     nil
+  end
+
+  def four_in_a_row_result(array)
+    chip1 = array[0]
+    array.reduce(true) { |p, chip2| p && chip1 == chip2 }
+  end
+
+  # assume that all win conditions are checked first
+  def check_draw
+    :draw if @game_state.flatten.reduce(&:&)
   end
 end
