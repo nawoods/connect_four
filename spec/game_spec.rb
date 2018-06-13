@@ -6,6 +6,48 @@ describe Game do
       expect(Game.new.game_state).to eq([[nil] * 7] * 6)
     end
   end
+  
+  describe "#to_s" do
+    context "at beginning of game" do
+      it "displays an empty game board" do
+        expect(Game.new.to_s).to eq(" 1 2 3 4 5 6 7\n"\
+                                    "| | | | | | | |\n"\
+                                    "| | | | | | | |\n"\
+                                    "| | | | | | | |\n"\
+                                    "| | | | | | | |\n"\
+                                    "| | | | | | | |\n"\
+                                    "| | | | | | | |\n"\
+                                    "---------------")
+      end
+    end
+    
+    context "in the middle of a game" do
+      subject do
+        game = Game.new
+        
+        game.play(1, 6)
+        game.play(2, 6)
+        
+        game.play(1, 3)
+        game.play(2, 3)
+        game.play(1, 3)
+        game.play(2, 3)
+        game.play(1, 3)
+        
+        game
+      end
+      it "displays board with placed chips" do
+        expect(subject.to_s).to eq(" 1 2 3 4 5 6 7\n"\
+                                    "| | | | | | | |\n"\
+                                    "| | |o| | | | |\n"\
+                                    "| | |x| | | | |\n"\
+                                    "| | |o| | | | |\n"\
+                                    "| | |x| | |x| |\n"\
+                                    "| | |o| | |o| |\n"\
+                                    "---------------")
+      end
+    end
+  end
 
   describe "#board_slot" do
     context "when slot is empty" do

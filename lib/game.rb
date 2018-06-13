@@ -4,7 +4,18 @@ class Game
   def initialize
     @game_state = Array.new(6) { Array.new(7) }
   end
-
+  
+  def to_s
+    result = " 1 2 3 4 5 6 7\n"
+    (1..6).to_a.reverse.each do |row|
+      (1..7).to_a.each do |col|
+        result += "|#{board_slot_s(row, col)}"
+      end
+      result += "|\n"
+    end  
+    result += "---------------"
+  end
+  
   def board_slot(row, col)
     @game_state[row-1][col-1]
   end
@@ -80,5 +91,13 @@ class Game
   # assume that all win conditions are checked first
   def check_draw
     :draw if @game_state.flatten.reduce(&:&)
+  end
+  
+  def board_slot_s(row, col)
+    case board_slot(row, col)
+    when 1 then "o"
+    when 2 then "x"
+    when nil then " "
+    end
   end
 end
