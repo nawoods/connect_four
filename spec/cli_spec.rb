@@ -17,6 +17,11 @@ describe CLI do
     end
   end
   
-  describe "#turn_loop" do
-  end
+#  describe "#turn_loop" do
+#    context "on first turn" do
+#      it "outputs current player number" do
+#        excpect { CLI.new }.to output(/PLAYER 1'S TURN/).to_stdout
+#      end
+#    end
+#  end
 end

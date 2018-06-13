@@ -1,8 +1,9 @@
 class Game
-  attr_reader :game_state
+  attr_reader :game_state, :current_player
   
   def initialize
     @game_state = Array.new(6) { Array.new(7) }
+    @current_player = 1
   end
   
   def to_s
@@ -17,16 +18,14 @@ class Game
   end
   
   def board_slot(row, col)
-    @game_state[row-1][col-1]
+    row.between?(1, 6) ? @game_state[row-1][col-1] : nil
   end
   
-  def play(player, col)
-    row = 1
-    while !board_slot(row, col).nil?
-      row += 1
-      return false if row > 6
-    end
-    insert_chip(player, row, col)
+  def play(col)
+    row = find_empty_row(col)
+    return false if row > 6
+    insert_chip(current_player, row, col)
+    @current_player = (@current_player == 1 ? 2 : 1)
   end
 
   def check_game_end
@@ -99,5 +98,13 @@ class Game
     when 2 then "x"
     when nil then " "
     end
+  end
+  
+  def find_empty_row(col)
+    row = 1
+    while !board_slot(row, col).nil?
+      row += 1
+    end
+    row
   end
 end

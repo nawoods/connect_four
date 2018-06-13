@@ -25,14 +25,14 @@ describe Game do
       subject do
         game = Game.new
         
-        game.play(1, 6)
-        game.play(2, 6)
+        game.play(6)
+        game.play(6)
         
-        game.play(1, 3)
-        game.play(2, 3)
-        game.play(1, 3)
-        game.play(2, 3)
-        game.play(1, 3)
+        game.play(3)
+        game.play(3)
+        game.play(3)
+        game.play(3)
+        game.play(3)
         
         game
       end
@@ -61,7 +61,7 @@ describe Game do
     context "when slot is nonempty" do
       subject do
         game = Game.new
-        game.play(1, 4)
+        game.play(4)
         game.board_slot(1, 4)
       end
 
@@ -75,7 +75,7 @@ describe Game do
     context "when given column is empty" do
       subject do
         game = Game.new
-        game.play(1, 4)
+        game.play(4)
         game.board_slot(1, 4)
       end
       
@@ -88,16 +88,8 @@ describe Game do
     context "when given column is neither empty nor full" do
       subject do
         game = Game.new
-        
-        game.play(1, 6)
-        game.play(2, 6)
-        
-        game.play(1, 3)
-        game.play(2, 3)
-        game.play(1, 3)
-        game.play(2, 3)
-        game.play(1, 3)
-        
+        2.times { game.play(6) }
+        5.times { game.play(3) }
         game
       end
       
@@ -111,19 +103,8 @@ describe Game do
       subject do
         game = Game.new
         game2 = Game.new
-        
-        i = 1
-        6.times do
-          game.play(i, 5)
-          i = (i + 1) % 2
-        end
-        
-        i = 1
-        7.times do
-          game2.play(i, 5)
-          i = (i + 1) % 2
-        end
-        
+        6.times { game.play(5) }
+        7.times { game2.play(5) }
         [game.game_state, game2.game_state]
       end
       
@@ -146,8 +127,8 @@ describe Game do
       subject do
         game = Game.new
         4.times do |i|
-          game.play(1, i+1)
-          game.play(2, 5) unless i == 3
+          game.play(i+1)
+          game.play(5) unless i == 3
         end
         game.check_game_end
       end
@@ -160,10 +141,10 @@ describe Game do
     context "when game has been won vertically" do
       subject do
         game = Game.new
-        game.play(1, 1)
+        game.play(1)
         4.times do |i|
-          game.play(2, 3)
-          game.play(1, 5) unless i == 3
+          game.play(3)
+          game.play(5) unless i == 3
         end
         game.check_game_end
       end
@@ -177,20 +158,11 @@ describe Game do
       subject do
         game = Game.new
 
-        game.play(1, 1)
-
-        game.play(2, 2)
-        game.play(1, 2)
-        
-        game.play(2, 1)
-        game.play(1, 3)
-        game.play(2, 3)
-        game.play(1, 3)
-
-        game.play(2, 4)
-        game.play(1, 4)
-        game.play(2, 4)
-        game.play(1, 4)
+        game.play(1)
+        2.times { game.play(2) }
+        game.play(1)
+        3.times { game.play(3) }
+        4.times { game.play(4) }
 
         game.check_game_end
       end
@@ -204,20 +176,11 @@ describe Game do
       subject do
         game = Game.new
 
-        game.play(1, 7)
-
-        game.play(2, 6)
-        game.play(1, 6)
-        
-        game.play(2, 1)
-        game.play(1, 5)
-        game.play(2, 5)
-        game.play(1, 5)
-
-        game.play(2, 4)
-        game.play(1, 4)
-        game.play(2, 4)
-        game.play(1, 4)
+        game.play(7)
+        2.times { game.play(6) }
+        game.play(1)
+        3.times { game.play(5) }
+        4.times { game.play(4) }
 
         game.check_game_end
       end
@@ -231,19 +194,12 @@ describe Game do
       subject do
         game = Game.new
 
-        7.times do |i|
-          next if i == 3
-          3.times do |j|
-            game.play(1, i+1)
-            game.play(2, i+1)
-          end
-        end
-
-        3.times do |j|
-          game.play(2, 4)
-          game.play(1, 4)
-        end
-
+        3.times { |i| 6.times { game.play(i+1) } }
+        game.play(5)
+        6.times { game.play(4) }
+        5.times { game.play(5) }
+        2.times { |i| 6.times { game.play(i+6) } }
+        puts game
         game.check_game_end
       end
 

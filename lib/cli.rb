@@ -12,6 +12,7 @@ class CLI
   
   def game_loop
     @game = Game.new
+    # turn_loop until game.check_game_end
   end
   
   def turn_loop
