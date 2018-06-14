@@ -199,7 +199,6 @@ describe Game do
         6.times { game.play(4) }
         5.times { game.play(5) }
         2.times { |i| 6.times { game.play(i+6) } }
-        puts game
         game.check_game_end
       end
 

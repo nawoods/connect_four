@@ -102,9 +102,7 @@ class Game
   
   def find_empty_row(col)
     row = 1
-    while !board_slot(row, col).nil?
-      row += 1
-    end
+    row += 1 while !board_slot(row, col).nil?
     row
   end
 end
