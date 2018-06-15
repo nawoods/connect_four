@@ -23,7 +23,8 @@ class CLI
   def turn_loop
     puts "PLAYER #{game.current_player}'S TURN"
     puts @game
-    choice = prompt("In which column would you like to play? (1-7) ", /^[1-7|exit]/)
+    choice = prompt("In which column would you like to play? (1-7) ",
+                    /^[1-7|exit]/)
     @end_game = true if choice == "exit"
     @game.play(choice.to_i)
   end

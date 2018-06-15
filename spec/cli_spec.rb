@@ -2,16 +2,9 @@ require_relative "../lib/cli.rb"
 require_relative "./support/io_test_helpers.rb"
 
 describe CLI do
-  include IoTestHelpers
-  
   describe "#initialize" do
     context "when game is started" do
-      subject do
-        simulate_stdin("3", "exit") do
-          cli = CLI.new
-          cli.end_game = true
-        end
-      end
+      subject { simulate_stdin(*%w(3 exit)) { CLI.new } }
       
       it "prints welcome message to console" do
         expect { subject }.to output(/W E L C O M E/).to_stdout
@@ -21,7 +14,7 @@ describe CLI do
   
   describe "#game_loop" do
     context "when game is started" do
-      subject { simulate_stdin("3", "exit") { CLI.new } }
+      subject { simulate_stdin(*%w(3 exit)) { CLI.new } }
       it "creates a Game object" do
         expect(subject.game).to be_a(Game)
       end
@@ -32,7 +25,7 @@ describe CLI do
     
     context "on first turn" do
       subject do
-        simulate_stdin("3", "exit") do
+        simulate_stdin(*%w(3 exit)) do
           cli = CLI.new
           cli.end_game = true
         end
@@ -51,7 +44,7 @@ describe CLI do
       end
 
       it "accepts user input for column number" do
-        simulate_stdin("3", "exit") do
+        simulate_stdin(*%w(3 exit)) do
           cli = CLI.new
           expect(cli.game.to_s).to match(/\|o\|/)
         end
@@ -60,7 +53,7 @@ describe CLI do
     
     context "on subsequent turns" do
       it "accepts user input for column numbers" do
-        simulate_stdin("3", "4", "exit") do
+        simulate_stdin(*%w(3 4 exit)) do
           cli = CLI.new
           expect(cli.game.to_s).to match(/\|o\|x\|/)
         end
