@@ -190,7 +190,7 @@ describe Game do
       end
     end
 
-    context "when game board is full" do
+    context "when game board is full and no one won" do
       subject do
         game = Game.new
 

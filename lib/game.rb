@@ -89,7 +89,7 @@ class Game
 
   # assume that all win conditions are checked first
   def check_draw
-    :draw if @game_state.flatten.reduce(&:&)
+    :draw if !@game_state.flatten.map(&:nil?).reduce(&:|)
   end
   
   def board_slot_s(row, col)
